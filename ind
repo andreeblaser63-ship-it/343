@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KIS Edge MAX | Financial Information Consulting Services</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+        :root {
+            --main: #2af80e;
+            --aux: #348bcf;
+            --highlight: #8b1673;
+            --neutral: #f5ef0d;
+            --dark: #121212;
+            --white: #ffffff;
+            --gray: #f4f7fa;
+        }
+        body {
+            color: #333;
+            overflow-x: hidden;
+        }
+        /* Header & Navbar */
+        header {
+            background-color: var(--dark);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 999;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+        }
+        .nav-container {
+            max-width: 1320px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 72px;
+        }
+        .logo {
+            font-size: 26px;
+            font-weight: 700;
+            color: var(--main);
+            letter-spacing: 1px;
+        }
+        .nav-menu {
+            display: flex;
+            gap: 32px;
+        }
+        .nav-menu a {
+            color: var(--white);
+            text-decoration: none;
+            font-size: 15px;
+            transition: color 0.3s ease;
+            padding: 8px 0;
+            position: relative;
+        }
+        .nav-menu a:hover {
+            color: var(--main);
+        }
+        .nav-menu a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            left: 0;
+            bottom: 0;
+            background: var(--main);
+            transition: width 0.3s;
+        }
+        .nav-menu a:hover::after {
+            width: 100%;
+        }
+        .mobile-menu-btn {
+            display: none;
+            color: #fff;
+            font-size: 28px;
+            cursor: pointer;
+        }
+        .mobile-nav {
+            position: fixed;
+            top:72px;
+            left:-100%;
+            width:100%;
+            height:calc(100vh - 72px);
+            background:#191919;
+            transition: left 0.4s ease;
+            padding:40px 30px;
+        }
+        .mobile-nav.active {
+            left:0;
+        }
+        .mobile-nav a {
+            display:block;
+            color:#fff;
+            font-size:18px;
+            padding:16px 0;
+            border-bottom:1px solid #333;
+            text-decoration:none;
+        }
+        .mobile-nav a:hover {
+            color:var(--main);
+        }
+
+        /* Hero Section */
+        .hero {
+            margin-top:72px;
+            min-height: 90vh;
+            background: linear-gradient(rgba(0,0,0,0.7),rgba(0,0,0,0.7)), url('https://anasoldi85-lgtm.github.io/1-13/54.jpg') center/cover no-repeat;
+            display: flex;
+            align-items: center;
+            padding: 0 20px;
+        }
+        .hero-wrap {
+            max-width:1320px;
+            margin:0 auto;
+        }
+        .hero h1 {
+            font-size: 52px;
+            color: var(--white);
+            margin-bottom:22px;
+        }
+        .hero h1 span {
+            color: var(--main);
+        }
+        .hero p {
+            color:#ddd;
+            font-size:18px;
+            max-width:650px;
+            line-height:1.8;
+            margin-bottom:35px;
+        }
+        .hero-btn {
+            padding:15px 36px;
+            background:var(--main);
+            color:#000;
+            font-weight:600;
+            text-decoration:none;
+            border-radius:4px;
+            transition: all 0.3s;
+            display:inline-block;
+        }
+        .hero-btn:hover {
+            background:#23e00c;
+            transform: translateY(-3px);
+            box-shadow:0 8px 20px rgba(42,248,14,0.3);
+        }
+
+        /* Common Section Style */
+        section {
+            padding:90px 20px;
+        }
+        .container {
+            max-width:1320px;
+            margin:0 auto;
+        }
+        .section-head {
+            text-align:center;
+            margin-bottom:60px;
+        }
+        .section-head h2 {
+            font-size:38px;
+            color:var(--dark);
+            margin-bottom:14px;
+        }
+        .section-head p {
+            color:#666;
+            max-width:700px;
+            margin:0 auto;
+            font-size:16px;
+        }
+        /* About Us Page Section */
+        #about {
+            background:var(--gray);
+        }
+        .about-row {
+            display:grid;
+            grid-template-columns:1fr 1fr;
+            gap:50px;
+            align-items:center;
+        }
+        .about-img img {
+            width:100%;
+            border-radius:6px;
+            box-shadow:0 10px 30px rgba(0,0,0,0.1);
+        }
+        .about-content h3 {
+            font-size:28px;
+            margin-bottom:20px;
+            color:var(--dark);
+        }
+        .about-content p {
+            line-height:1.8;
+            color:#555;
+            margin-bottom:16px;
+        }
+        /* Services Section */
+        #services {
+            background:#fff;
+        }
+        .service-grid {
+            display:grid;
+            grid-template-columns:repeat(3,1fr);
+            gap:30px;
+        }
+        .service-card {
+            background:var(--aux);
+            padding:35px 28px;
+            border-radius:6px;
+            color:#fff;
+            transition:transform 0.3s ease;
+        }
+        .service-card:hover {
+            transform:translateY(-8px);
+            box-shadow:0 12px 28px rgba(52,139,207,0.25);
+        }
+        .service-card h4 {
+            font-size:22px;
+            margin-bottom:15px;
+            color:var(--highlight);
+        }
+        .service-card p {
+            line-height:1.7;
+            font-size:15px;
+        }
+        /* 新增：服务详情子内容样式 */
+        .service-detail {
+            margin-top: 40px;
+            padding: 30px;
+            background: var(--gray);
+            border-radius: 8px;
+        }
+        .service-detail h5 {
+            font-size: 20px;
+            color: var(--dark);
+            margin-bottom: 15px;
+            border-left: 4px solid var(--main);
+            padding-left: 10px;
+        }
+        .service-detail ul {
+            list-style: disc;
+            padding-left: 20px;
+            color: #555;
+            line-height: 1.8;
+        }
+        .service-detail ul li {
+            margin-bottom: 8px;
+        }
+        .service-tag {
+            display:inline-block;
+            margin-top:18px;
+            background:var(--neutral);
+            color:#111;
+            padding:5px 12px;
+            border-radius:3px;
+            font-size:13px;
+            font-weight:500;
+        }
+        /* Data & Advantage Section */
+        #advantage {
+            background:linear-gradient(135deg,#182848,#0b132b);
+        }
+        #advantage .section-head h2 {
+            color:#fff;
+        }
+        #advantage .section-head p {
+            color:#ccc;
+        }
+        .adv-grid {
+            display:grid;
+            grid-template-columns:repeat(4,1fr);
+            gap:24px;
+        }
+        .adv-box {
+            background:var(--aux);
+            padding:30px 20px;
+            text-align:center;
+            border-radius:5px;
+        }
+        .adv-num {
+            font-size:42px;
+            font-weight:700;
+            color:var(--highlight);
+            margin-bottom:10px;
+        }
+        .adv-title {
+            color:#fff;
+            font-size:17px;
+            margin-bottom:8px;
+        }
+        .adv-desc {
+            color:var(--neutral);
+            font-size:14px;
+        }
+        /* Team Section */
+        #team {
+            background:var(--gray);
+        }
+        .team-grid {
+            display:grid;
+            grid-template-columns:repeat(3,1fr);
+            gap:32px;
+        }
+        .team-card {
+            background:#fff;
+            border-radius:6px;
+            overflow:hidden;
+            box-shadow:0 6px 22px rgba(0,0,0,0.08);
+        }
+        .team-img {
+            height:260px;
+        }
+        .team-img img {
+            width:100%;
+            height:100%;
+            object-fit:cover;
+        }
+        .team-info {
+            padding:22px;
+        }
+        .team-info h5 {
+            font-size:20px;
+            color:var(--dark);
+        }
+        /* 新增：团队详情子内容样式 */
+        .team-detail {
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px solid #eee;
+        }
+        .team-detail p {
+            font-size: 14px;
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 8px;
+        }
+        .team-detail .qualification {
+            color: var(--highlight);
+            font-weight: 500;
+        }
+        .team-pos {
+            color: var(--highlight);
+            margin:6px 0 12px;
+            font-size:14px;
+        }
+        .team-desc {
+            font-size:14px;
+            color:#666;
+            line-height:1.6;
+        }
+        /* Contact Section */
+        #contact {
+            background:#fff;
+        }
+        .contact-wrap {
+            display:grid;
+            grid-template-columns:1fr 1fr;
+            gap:50px;
+        }
+        .contact-info h3 {
+            font-size:26px;
+            margin-bottom:24px;
+        }
+        .contact-item {
+            margin-bottom:22px;
+            display:flex;
+            align-items:flex-start;
+            gap:14px;
+        }
+        .contact-icon {
+            width:42px;
+            height:42px;
+            background:var(--main);
+            color:#000;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            border-radius:50%;
+            font-size:18px;
+            flex-shrink:0;
+        }
+        .contact-text h4 {
+            font-size:17px;
+            margin-bottom:5px;
+        }
+        .contact-text p {
+            color:#555;
+        }
+        /* Contact Form */
+        .contact-form input, .contact-form textarea {
+            width:100%;
+            padding:15px;
+            margin-bottom:18px;
+            border:1px solid #ddd;
+            border-radius:4px;
+            font-size:15px;
+        }
+        .contact-form textarea {
+            min-height:150px;
+            resize:none;
+        }
+        .submit-btn {
+            width:100%;
+            padding:16px;
+            border:none;
+            background:var(--main);
+            font-weight:600;
+            font-size:16px;
+            cursor:pointer;
+            border-radius:4px;
+            transition:0.3s;
+        }
+        .submit-btn:hover {
+            background:#23e00c;
+        }
+        .success-msg {
+            color:#009933;
+            font-weight:500;
+            display:none;
+            text-align:center;
+            padding:12px;
+            background:#eafdea;
+            border-radius:4px;
+        }
+        /* Footer */
+        footer {
+            background:#111;
+            padding:60px 20px 30px;
+        }
+        .footer-top {
+            max-width:1320px;
+            margin:0 auto;
+            display:grid;
+            grid-template-columns:repeat(4,1fr);
+            gap:35px;
+            margin-bottom:40px;
+        }
+        .footer-col h4 {
+            color:var(--main);
+            font-size:20px;
+            margin-bottom:22px;
+        }
+        .footer-col p {
+            color:#aaa;
+            font-size:14px;
+            line-height:1.7;
+        }
+        .footer-col a {
+            display:block;
+            color:#aaa;
+            text-decoration:none;
+            margin-bottom:12px;
+            font-size:14px;
+            transition:color 0.3s;
+        }
+        .footer-col a:hover {
+            color:var(--main);
+        }
+        .copyright {
+            text-align:center;
+            padding-top:30px;
+            border-top:1px solid #222;
+            color:#777;
+            font-size:14px;
+        }
+
+        /* Mobile Responsive */
+        @media(max-width:992px) {
+            .nav-menu {display:none;}
+            .mobile-menu-btn {display:block;}
+            .about-row, .contact-wrap {grid-template-columns:1fr;}
+            .service-grid {grid-template-columns:repeat(2,1fr);}
+            .adv-grid {grid-template-columns:repeat(2,1fr);}
+            .team-grid {grid-template-columns:repeat(2,1fr);}
+            .footer-top {grid-template-columns:repeat(2,1fr);}
+            .hero h1 {font-size:38px;}
+        }
+        @media(max-width:576px) {
+            .service-grid,.adv-grid,.team-grid,.footer-top {grid-template-columns:1fr;}
+            .hero h1 {font-size:30px;}
+            .section-head h2 {font-size:28px;}
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Navigation -->
+    <header>
+        <div class="nav-container">
+            <div class="logo">KIS Edge MAX</div>
+            <nav class="nav-menu">
+                <a href="#home">Home</a>
+                <a href="#about">About Us</a>
+                <a href="#services">Our Services</a>
+                <a href="#advantage">Advantages</a>
+                <a href="#team">Our Team</a>
+                <a href="#contact">Contact Us</a>
+            </nav>
+            <div class="mobile-menu-btn" id="mobileMenuBtn">☰</div>
+        </div>
+        <div class="mobile-nav" id="mobileNav">
+            <a href="#home">Home</a>
+            <a href="#about">About Us</a>
+            <a href="#services">Our Services</a>
+            <a href="#advantage">Advantages</a>
+            <a href="#team">Our Team</a>
+            <a href="#contact">Contact Us</a>
+        </div>
+    </header>
+
+    <!-- Hero Home Section -->
+    <section class="hero" id="home">
+        <div class="hero-wrap">
+            <h1>Professional <span>Financial Information</span> Consulting Solutions</h1>
+            <p>KIS Edge MAX is a leading London-based financial consulting enterprise focused on global financial market research, asset allocation consulting, market data analysis and personalized financial planning services for institutions and individual investors worldwide.</p>
+            <a href="#contact" class="hero-btn">Get Free Consultation</a>
+        </div>
+    </section>
+
+    <!-- About Us Section (新增扩展描述) -->
+    <section id="about">
+        <div class="container">
+            <div class="section-head">
+                <h2>About KIS Edge MAX Company</h2>
+                <p>Founded in London, we provide standardized, data-driven financial consulting services across global financial markets</p>
+            </div>
+            <div class="about-row">
+                <div class="about-img">
+                    <img src="https://anasoldi85-lgtm.github.io/1-13/55.jpg" alt="KIS Edge MAX Office">
+                </div>
+                <div class="about-content">
+                    <h3>We Are Trusted Financial Information Consultants In London</h3>
+                    <p>KIS Edge MAX is registered and operated at England London 60 Broadwick St, established by senior financial analysts and investment consultants with decades of experience in international capital markets. Our core business covers cross-border financial information collection, market trend research, risk assessment consulting and investment strategy customization.</p>
+                    <p>We strictly follow UK financial service regulatory standards, integrate real-time global financial big data resources, and deliver objective, actionable consulting reports to thousands of corporate clients and private investors across Europe, Asia and North America every year.</p>
+                    <!-- 新增：关于我们扩展描述 -->
+                    <p>Our mission is to bridge the information gap in global financial markets, providing clients with transparent, accurate and timely market insights to support their investment decision-making. We adhere to the principle of "client-centric" service, and customize solutions according to the risk appetite, investment scale and strategic objectives of different clients.</p>
+                    <p>Over the past 15 years, KIS Edge MAX has built a mature service system covering more than 50 countries and regions, with a professional team of over 80 people, including CFA (Chartered Financial Analyst), FRM (Financial Risk Manager) and other senior certified professionals.</p>
+                    <span class="service-tag">Established: London UK</span>
+                    <span class="service-tag" style="margin-left: 10px;">Certification: FCA Regulated</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Our Services Section (新增服务详情子内容) -->
+    <section id="services">
+        <div class="container">
+            <div class="section-head">
+                <h2>Core Consulting Services</h2>
+                <p>Customized financial information consulting packages tailored for institutional & individual clients</p>
+            </div>
+            <div class="service-grid">
+                <div class="service-card">
+                    <h4>Global Market Data Research</h4>
+                    <p>Collect and sort real-time financial data from stock, forex, commodity and bond markets; compile weekly/monthly market analysis reports based on multi-dimensional data statistics.</p>
+                    <span class="service-tag">Data Analysis</span>
+                </div>
+                <div class="service-card">
+                    <h4>Investment Risk Consulting</h4>
+                    <p>Quantify investment risks via professional financial models, identify potential market volatility risks and give targeted risk evasion plans for different asset portfolios.</p>
+                    <span class="service-tag">Risk Control</span>
+                </div>
+                <div class="service-card">
+                    <h4>Cross-border Asset Consulting</h4>
+                    <p>Provide overseas asset allocation advice, cross-border fund information inquiry, international regulatory policy interpretation and global investment channel consulting service.</p>
+                    <span class="service-tag">Global Allocation</span>
+                </div>
+            </div>
+
+            <!-- 新增：服务详情子页面描述内容 -->
+            <div class="service-detail">
+                <h5>Global Market Data Research - Detailed Service Content</h5>
+                <ul>
+                    <li>Real-time monitoring of 10,000+ financial products across global markets (stocks, forex, commodities, bonds, derivatives)</li>
+                    <li>Multi-dimensional data analysis: technical indicators, fundamental data, market sentiment, macroeconomic indicators</li>
+                    <li>Customized report frequency: daily briefings, weekly analysis, monthly outlook, quarterly strategic reports</li>
+                    <li>Data visualization services: interactive dashboards, trend charts, comparative analysis reports</li>
+                    <li>Market anomaly alert service: real-time push of abnormal price fluctuations and trading volume changes</li>
+                </ul>
+
+                <h5 style="margin-top: 20px;">Investment Risk Consulting - Detailed Service Content</h5>
+                <ul>
+                    <li>Portfolio risk assessment: VaR (Value at Risk) calculation, stress testing, scenario analysis</li>
+                    <li>Market risk, credit risk, liquidity risk comprehensive evaluation</li>
+                    <li>Customized risk control strategy: stop-loss plan, position management, hedging scheme</li>
+                    <li>Regulatory compliance risk review: compliance with local financial regulations and tax policies</li>
+                    <li>Regular risk review: quarterly risk re-evaluation and strategy adjustment</li>
+                </ul>
+
+                <h5 style="margin-top: 20px;">Cross-border Asset Consulting - Detailed Service Content</h5>
+                <ul>
+                    <li>Overseas asset allocation scheme: regional allocation, industry allocation, product selection</li>
+                    <li>Cross-border capital flow consulting: foreign exchange control policy, remittance channel optimization</li>
+                    <li>International tax planning: tax optimization for cross-border investment, tax treaty utilization</li>
+                    <li>Overseas investment channel docking: cooperation with top global financial institutions</li>
+                    <li>Multilingual service support: English, Chinese, German, French, Spanish professional consulting</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Company Advantage Data Section -->
+    <section id="advantage">
+        <div class="container">
+            <div class="section-head">
+                <h2>Our Core Advantages In Numbers</h2>
+                <p>Years of accumulation and data-driven service system support our professional consulting capacity</p>
+            </div>
+            <div class="adv-grid">
+                <div class="adv-box">
+                    <div class="adv-num">15+</div>
+                    <div class="adv-title">Years Industry Experience</div>
+                    <div class="adv-desc">Senior analyst team background</div>
+                </div>
+                <div class="adv-box">
+                    <div class="adv-num">2200+</div>
+                    <div class="adv-title">Global Cooperative Clients</div>
+                    <div class="adv-desc">From Europe, Asia & Americas</div>
+                </div>
+                <div class="adv-box">
+                    <div class="adv-num">50+</div>
+                    <div class="adv-title">Financial Data Sources</div>
+                    <div class="adv-desc">Real-time global market database</div>
+                </div>
+                <div class="adv-box">
+                    <div class="adv-num">98%</div>
+                    <div class="adv-title">Client Satisfaction Rate</div>
+                    <div class="adv-desc">Long-term repeat cooperation rate</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Our Expert Team (新增团队详情子内容) -->
+    <section id="team">
+        <div class="container">
+            <div class="section-head">
+                <h2>Our Professional Consultant Team</h2>
+                <p>All core team members have formal UK financial industry qualification certificates and rich practical experience</p>
+            </div>
+            <div class="team-grid">
+                <div class="team-card">
+                    <div class="team-img">
+                        <img src="https://anasoldi85-lgtm.github.io/1-13/56.jpg" alt="Team Member">
+                    </div>
+                    <div class="team-info">
+                        <h5>Richard Henderson</h5>
+                        <div class="team-pos">Chief Financial Analyst</div>
+                        <div class="team-desc">18 years global capital market research experience, expert in international macroeconomic analysis.</div>
+                        <!-- 新增：团队成员详情 -->
+                        <div class="team-detail">
+                            <p><span class="qualification">Qualification:</span> CFA Level III, FRM, MBA in Finance (London Business School)</p>
+                            <p><span class="qualification">Experience:</span> Former senior analyst at Goldman Sachs London, specializing in G7 country macroeconomic research</p>
+                            <p><span class="qualification">Expertise:</span> Global macro strategy, interest rate market analysis, currency trend forecasting</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="team-card">
+                    <div class="team-img">
+                        <img src="https://anasoldi85-lgtm.github.io/1-13/57.jpg" alt="Team Member">
+                    </div>
+                    <div class="team-info">
+                        <h5>Sophie Miller</h5>
+                        <div class="team-pos">Cross-border Investment Consultant</div>
+                        <div class="team-desc">Specialized in EU financial regulation and transnational asset allocation planning solutions.</div>
+                        <!-- 新增：团队成员详情 -->
+                        <div class="team-detail">
+                            <p><span class="qualification">Qualification:</span> CFA Level III, Certified International Investment Analyst (CIIA)</p>
+                            <p><span class="qualification">Experience:</span> 15 years of cross-border investment consulting experience, former consultant at Deloitte Financial Advisory</p>
+                            <p><span class="qualification">Expertise:</span> EU financial regulation, cross-border real estate investment, family office asset planning</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="team-card">
+                    <div class="team-img">
+                        <img src="https://anasoldi85-lgtm.github.io/1-13/58.jpg" alt="Team Member">
+                    </div>
+                    <div class="team-info">
+                        <h5>James Wilson</h5>
+                        <div class="team-pos">Risk Management Specialist</div>
+                        <div class="team-desc">Focus on quantitative risk modeling and investment portfolio risk control consulting.</div>
+                        <!-- 新增：团队成员详情 -->
+                        <div class="team-detail">
+                            <p><span class="qualification">Qualification:</span> FRM, PhD in Financial Engineering (Imperial College London)</p>
+                            <p><span class="qualification">Experience:</span> Former risk modeler at JP Morgan, 12 years of quantitative risk management experience</p>
+                            <p><span class="qualification">Expertise:</span> Quantitative risk model building, portfolio optimization, derivative risk hedging</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Us Page -->
+    <section id="contact">
+        <div class="container">
+            <div class="section-head">
+                <h2>Contact KIS Edge MAX</h2>
+                <p>Send your consultation request or visit our London office directly</p>
+            </div>
+            <div class="contact-wrap">
+                <div class="contact-info">
+                    <h3>Company Contact Information</h3>
+                    <div class="contact-item">
+                        <div class="contact-icon">📍</div>
+                        <div class="contact-text">
+                            <h4>Office Address</h4>
+                            <p>England London 60 Broadwick St</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">📞</div>
+                        <div class="contact-text">
+                            <h4>Phone Number</h4>
+                            <p>+44 7750893847</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">✉</div>
+                        <div class="contact-text">
+                            <h4>Business Email</h4>
+                            <p>info@KIS Edge MAX-fin.co.uk</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">🕒</div>
+                        <div class="contact-text">
+                            <h4>Working Hours</h4>
+                            <p>Mon-Fri: 9:00 - 18:00 GMT, Weekend Closed</p>
+                        </div>
+                    </div>
+                    <!-- 新增：联系我们扩展信息 -->
+                    <div class="contact-item">
+                        <div class="contact-icon">🌐</div>
+                        <div class="contact-text">
+                            <h4>Online Consulting</h4>
+                            <p>24/7 Online Chat: Available on official website</p>
+                            <p>Video Consultation: By appointment (Zoom/Teams)</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="contact-form">
+                    <form id="contactForm">
+                        <input type="text" placeholder="Your Full Name" required>
+                        <input type="email" placeholder="Your Email Address" required>
+                        <input type="tel" placeholder="Your Contact Phone">
+                        <textarea placeholder="Leave your consultation message here... (e.g. service type, investment scale, time requirements)" required></textarea>
+                        <button class="submit-btn" type="submit">Submit Your Request</button>
+                        <div class="success-msg" id="successAlert">Your message has been submitted successfully! We will contact you within 24 working hours.</div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Area -->
+    <footer>
+        <div class="footer-top">
+            <div class="footer-col">
+                <h4>KIS Edge MAX</h4>
+                <p>Professional London financial information consulting firm providing reliable global financial analysis and customized investment consulting services worldwide. Adhering to the highest professional and ethical standards, we are committed to creating long-term value for our clients.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Quick Links</h4>
+                <a href="#home">Home</a>
+                <a href="#about">About Us</a>
+                <a href="#services">Services</a>
+                <a href="#advantage">Advantages</a>
+                <a href="#team">Our Team</a>
+                <a href="#contact">Contact Us</a>
+            </div>
+            <div class="footer-col">
+                <h4>Our Services</h4>
+                <a href="#services">Market Data Research</a>
+                <a href="#services">Investment Risk Consulting</a>
+                <a href="#services">Cross-border Asset Advice</a>
+                <a href="#services">Customized Financial Reports</a>
+                <a href="#services">Regulatory Compliance Consulting</a>
+            </div>
+            <div class="footer-col">
+                <h4>Contact Info</h4>
+                <p>60 Broadwick St, London England</p>
+                <p>+44 7750893847</p>
+                <p>info@KIS Edge MAX-fin.co.uk</p>
+                <p>Mon-Fri: 9:00 - 18:00 GMT</p>
+            </div>
+        </div>
+        <div class="copyright">
+            © 2025 KIS Edge MAX Financial Information Consulting. All Rights Reserved. | Regulated by the Financial Conduct Authority (FCA) in the UK | Company Registration No.: 12345678
+        </div>
+    </footer>
+
+    <script>
+        // Mobile Navigation Toggle
+        const mobileBtn = document.getElementById('mobileMenuBtn');
+        const mobileNav = document.getElementById('mobileNav');
+        mobileBtn.addEventListener('click', ()=>{
+            mobileNav.classList.toggle('active');
+        });
+        // Close mobile menu after click link
+        const mobileLinks = mobileNav.querySelectorAll('a');
+        mobileLinks.forEach(item=>{
+            item.addEventListener('click',()=>{
+                mobileNav.classList.remove('active');
+            })
+        })
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor=>{
+            anchor.addEventListener('click',function(e){
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                const targetDom = document.querySelector(targetId);
+                if(targetDom){
+                    window.scrollTo({
+                        top: targetDom.offsetTop -72,
+                        behavior:'smooth'
+                    })
+                }
+            })
+        })
+        // Contact form submit always success
+        const form = document.getElementById('contactForm');
+        const successTip = document.getElementById('successAlert');
+        form.addEventListener('submit',function(e){
+            e.preventDefault();
+            successTip.style.display = 'block';
+            form.reset();
+            setTimeout(()=>{
+                successTip.style.display = 'none';
+            },4000)
+        })
+    </script>
+</body>
+</html>
